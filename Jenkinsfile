@@ -5,12 +5,12 @@ pipeline {
   }
   stages {
     stage('Checkout') {
-      steps { git url: 'git@github.com:tu_usuario/mi_crud.git', branch: 'main' }
+      steps { git url: 'git@github.com:daviddvf/ProyectoLenMPro.git',branch: 'main' ,credentialsId: 'gitsshkey'}
     }
     stage('Build Docker') {
       steps {
         script {
-          docker.build("tu_usuario/mi_crud_app:${env.BUILD_NUMBER}")
+          docker.build("daviddvf/mi_crud_app:${env.BUILD_NUMBER}")
         }
       }
     }
@@ -18,7 +18,7 @@ pipeline {
       steps {
         script {
           docker.withRegistry('', 'dockerhub-id') {
-            docker.image("tu_usuario/mi_crud_app:${env.BUILD_NUMBER}").push()
+            docker.image("daviddvf/mi_crud_app:${env.BUILD_NUMBER}").push()
           }
         }
       }
